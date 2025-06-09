@@ -6,7 +6,7 @@ import "./globals.css";
 // 1. Importer Navbar og Footer
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import "./globals.css"; // Denne linjen sikrer at alle globale stiler gjelder
+// Denne linjen sikrer at alle globale stiler gjelder
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,27 +32,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="no">
-      <div className="fixed inset-0 bg-paper-texture bg-cover bg-center opacity-[0.03] pointer-events-none"></div>
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
       >
-        {/* This background texture div is fine here. It sits behind everything. */}
+        {/* Move the texture div inside the body */}
+        <div className="fixed inset-0 bg-paper-texture bg-cover bg-center opacity-[0.03] pointer-events-none" />
 
-        {/*
-          KORREKSJON:
-          Navbar, main, og Footer skal være *inni* denne div-en.
-          Denne div-en fungerer som hoved-container for alt synlig innhold,
-          plasserer det over bakgrunnsteksturen (med relative z-10) og
-          strukturerer layouten (med flex flex-col min-h-screen).
-        */}
         <div className="relative z-10 flex flex-col min-h-screen">
-          {/* 3. Legg til Navbar øverst */}
+          {/* Test div - midlertidig */}
+          <div className="bg-primary text-primary-foreground p-4 text-center">
+            Test: Denne bør være grønn med hvit tekst
+          </div>
+
           <Navbar />
-
-          {/* 4. Wrap 'children' i en <main>-tag med 'flex-grow'. */}
           <main className="flex-grow">{children}</main>
-
-          {/* 5. Legg til Footer nederst */}
           <Footer />
         </div>
       </body>

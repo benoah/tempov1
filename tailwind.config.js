@@ -22,7 +22,7 @@ module.exports = {
         mono: ["var(--font-geist-mono)"],
       },
       backgroundImage: {
-        "paper-texture": "url('/paper-texture.jpg')",
+        "paper-texture": "url('/public/paper-texture.jpg')",
       },
     },
   },
