@@ -6,6 +6,7 @@ import "./globals.css";
 // 1. Importer Navbar og Footer
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import "./globals.css"; // Denne linjen sikrer at alle globale stiler gjelder
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,11 +32,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="no">
+      <div className="fixed inset-0 bg-paper-texture bg-cover bg-center opacity-[0.03] pointer-events-none"></div>
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
       >
         {/* This background texture div is fine here. It sits behind everything. */}
-        <div className="fixed inset-0 bg-paper-texture bg-cover bg-center opacity-[0.03] pointer-events-none" />
 
         {/*
           KORREKSJON:
