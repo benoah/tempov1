@@ -4,14 +4,14 @@ import Image from "next/image";
 
 export default function AboutSection() {
   return (
-    <div className="bg-white dark:bg-gray-900 py-16 sm:py-24">
+    <div className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm py-16 sm:py-24">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Bilde av teamet eller kontoret */}
           <div className="order-last lg:order-first">
             <Image
-              src="https://placehold.co/600x400/E5E7EB/4B5563?text=Vårt+Team"
-              alt="Teamet bak agenturet"
+              src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=2070"
+              alt="Profesjonelt team i møte"
               width={600}
               height={400}
               className="rounded-lg shadow-xl"
@@ -20,9 +20,7 @@ export default function AboutSection() {
 
           {/* Tekstinnhold */}
           <div className="text-center lg:text-left">
-            <p className="font-semibold text-blue-600 dark:text-blue-400 uppercase">
-              Hvem vi er
-            </p>
+            <p className="font-semibold text-primary uppercase">Hvem vi er</p>
             <h2 className="mt-2 text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
               Mer enn et agentur – en karrierepartner
             </h2>

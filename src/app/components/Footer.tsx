@@ -41,7 +41,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Om agenturet */}
           <div>
-            <h3 className="text-xl font-bold">Ditt Agentur AS</h3>
+            <h3 className="text-xl font-bold">Tempo Sports Group</h3>
             <p className="mt-4 text-gray-400">
               Din partner for en profesjonell fotballkarriere. Vi bygger
               fremtiden, en spiller av gangen.

@@ -82,7 +82,7 @@ export default function PlayerShowcase() {
                   {player.position}
                 </p>
                 <Link href={player.profileUrl}>
-                  <span className="mt-4 inline-block text-blue-600 dark:text-blue-400 font-semibold hover:underline">
+                  <span className="mt-4 inline-block text-primary font-semibold hover:text-primary-dark transition-colors">
                     Se full profil →
                   </span>
                 </Link>

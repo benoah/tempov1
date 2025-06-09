@@ -17,4 +17,18 @@
   }
 }
 
-/* Du kan fjerne 'body'-blokken som var her, da Tailwind nå håndterer det */
+/* Paper texture overlay */
+.paper-texture-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.03;
+  mix-blend-mode: multiply;
+}
+
+/* Ensure content is above the texture */
+.content-layer {
+  position: relative;
+  z-index: 2;
+}

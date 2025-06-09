@@ -31,26 +31,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="no">
-      {/*
-        VIKTIG ENDRING HER:
-        Vi legger til 'bg-background' og 'text-foreground'.
-        Disse klassene kommer fra din tailwind.config.js og henter
-        verdiene fra CSS-variablene --background og --foreground
-        som er definert i globals.css.
-      */}
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased flex flex-col min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
       >
-        {/* 3. Legg til Navbar øverst */}
-        <Navbar />
+        {/* This background texture div is fine here. It sits behind everything. */}
+        <div className="fixed inset-0 bg-paper-texture bg-cover bg-center opacity-[0.03] pointer-events-none" />
 
-        {/* 4. Wrap 'children' i en <main>-tag med 'flex-grow'.
-          Dette sørger for at innholdet fyller plassen og dytter footeren pent ned på sider med lite innhold.
+        {/*
+          KORREKSJON:
+          Navbar, main, og Footer skal være *inni* denne div-en.
+          Denne div-en fungerer som hoved-container for alt synlig innhold,
+          plasserer det over bakgrunnsteksturen (med relative z-10) og
+          strukturerer layouten (med flex flex-col min-h-screen).
         */}
-        <main className="flex-grow">{children}</main>
+        <div className="relative z-10 flex flex-col min-h-screen">
+          {/* 3. Legg til Navbar øverst */}
+          <Navbar />
 
-        {/* 5. Legg til Footer nederst */}
-        <Footer />
+          {/* 4. Wrap 'children' i en <main>-tag med 'flex-grow'. */}
+          <main className="flex-grow">{children}</main>
+
+          {/* 5. Legg til Footer nederst */}
+          <Footer />
+        </div>
       </body>
     </html>
   );

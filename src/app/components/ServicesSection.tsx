@@ -89,7 +89,7 @@ export default function ServicesSection() {
               key={service.title}
               className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-lg"
             >
-              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-blue-600 mx-auto mb-6">
+              <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary mx-auto mb-6">
                 {service.icon}
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white">
