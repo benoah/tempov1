@@ -7,22 +7,34 @@ module.exports = {
   ],
   theme: {
     extend: {
+      // Her forteller vi Tailwind om fargene våre
       colors: {
-        background: "#f6f3ec", // Direkte verdi
-        foreground: "#010103",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        // Oppdaterte merkevarefarger med grønn som primær
         primary: {
-          DEFAULT: "#25723e", // Direkte verdi
+          DEFAULT: "#25723e", // Tempo Sports Group grønn
           light: "#2d8347",
           dark: "#1e5b32",
           foreground: "#FFFFFF",
         },
+        secondary: {
+          DEFAULT: "#F6F3EC", // Varm off-white
+          foreground: "#010103", // Nesten svart tekst
+        },
+        accent: {
+          DEFAULT: "#2563EB", // Blå aksent
+          foreground: "#FFFFFF",
+        },
       },
+      // Her forteller vi Tailwind om fontene våre
       fontFamily: {
         sans: ["var(--font-geist-sans)"],
         mono: ["var(--font-geist-mono)"],
       },
+      // Legger til bakgrunnsbilde
       backgroundImage: {
-        "paper-texture": "url('/public/paper-texture.jpg')",
+        "paper-texture": "url('/paper-texture.jpg')",
       },
     },
   },

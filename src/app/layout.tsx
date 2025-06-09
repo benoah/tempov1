@@ -7,7 +7,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 // Denne linjen sikrer at alle globale stiler gjelder
-
+import Image from "next/image";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -33,17 +33,11 @@ export default function RootLayout({
   return (
     <html lang="no">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased flex flex-col min-h-screen relative`}
       >
-        {/* Move the texture div inside the body */}
-        <div className="fixed inset-0 bg-paper-texture bg-cover bg-center opacity-[0.03] pointer-events-none" />
-
+        {/* Fixed: Use absolute path to public directory */}
+        <div className="fixed inset-0 bg-[url('/paper-texture.jpg')] bg-cover bg-center opacity-[0.03] pointer-events-none" />
         <div className="relative z-10 flex flex-col min-h-screen">
-          {/* Test div - midlertidig */}
-          <div className="bg-primary text-primary-foreground p-4 text-center">
-            Test: Denne bør være grønn med hvit tekst
-          </div>
-
           <Navbar />
           <main className="flex-grow">{children}</main>
           <Footer />

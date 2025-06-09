@@ -16,7 +16,24 @@
     --foreground: #f6f3ec;
   }
 }
-
+/* globals.css */
+html {
+  scroll-behavior: smooth;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/paper-texture.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.02;
+  pointer-events: none;
+  z-index: -1;
+}
 /* Paper texture overlay */
 .paper-texture-overlay {
   position: fixed;
