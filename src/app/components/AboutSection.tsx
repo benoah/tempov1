@@ -17,24 +17,36 @@ export default function AboutSection() {
               className="rounded-lg shadow-xl"
             />
           </div>
-
           {/* Tekstinnhold */}
-          <div className="text-center lg:text-left">
-            <p className="font-semibold text-primary uppercase">Hvem vi er</p>
-            <h2 className="mt-2 text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
-              Mer enn et agentur – en karrierepartner
+          <div className="text-center lg:text-left max-w-3xl">
+            <div className="inline-flex items-center gap-2 mb-4 lg:mb-5">
+              <div className="w-3 h-0.5 bg-green-500"></div>
+              <p className="font-semibold text-green-500 uppercase tracking-wider text-sm">
+                Hvem vi er
+              </p>
+            </div>
+
+            <h2 className="text-3xl md:text-4xl lg:text-[42px] font-extrabold text-gray-900 dark:text-white leading-tight md:leading-tight">
+              Mer enn et agentur –{" "}
+              <span className="text-green-500">din karrierepartner</span>
             </h2>
-            <p className="mt-6 text-lg text-gray-600 dark:text-gray-300">
-              Vi ble grunnlagt med en enkel visjon: å sette spillerens karriere
-              og velvære først. Vårt team består av erfarne agenter, jurister og
-              markedsførere som brenner for fotball og for å realisere
-              potensialet til hver enkelt spiller vi jobber med.
-            </p>
-            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-              Vi tror på ærlighet, transparens og hardt arbeid som grunnlaget
-              for langvarig suksess, både på og utenfor banen.
-            </p>
-          </div>
+
+            <div className="mt-8 space-y-5">
+              <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+                Vi ble grunnlagt med en enkel visjon: å sette spillerens
+                karriere og velvære først. Vårt team består av erfarne agenter,
+                jurister og markedsførere som brenner for fotball og for å
+                realisere potensialet til hver enkelt spiller vi jobber med.
+              </p>
+
+              <div className="pl-5 border-l-2 border-green-500/30">
+                <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 italic leading-relaxed">
+                  Vi tror på ærlighet, transparens og hardt arbeid som
+                  grunnlaget for langvarig suksess, både på og utenfor banen.
+                </p>
+              </div>
+            </div>
+          </div>{" "}
         </div>
       </div>
     </div>

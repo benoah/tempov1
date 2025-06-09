@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // ... dine andre konfigurasjoner
+  // ... your other configurations
   images: {
     remotePatterns: [
       {
@@ -10,10 +10,16 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**",
       },
-      // LEGG TIL DENNE FOR Å TILLATE PLACEHOLDER-BILDER
       {
         protocol: "https",
         hostname: "placehold.co",
+        port: "",
+        pathname: "/**",
+      },
+      // ADD THIS FOR WIKIMEDIA LOGOS
+      {
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
         port: "",
         pathname: "/**",
       },

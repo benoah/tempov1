@@ -49,3 +49,16 @@ body::before {
   position: relative;
   z-index: 2;
 }
+
+.custom-primary-textured-bg {
+  /* Ensure the background color is below the gradient if you want the dots to be lighter/darker than the base color */
+  background-color: #25723e; /* Your primary color */
+  background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 0%
+    ),
+    radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.05) 1px, transparent 0%);
+  background-size: 8px 8px; /* Size of the repeating pattern */
+  background-position: 0 0, 4px 4px; /* Offset the second gradient for a staggered dot effect */
+}
