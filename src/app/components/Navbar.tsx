@@ -9,12 +9,16 @@ import clsx from "clsx";
 import { FocusTrap } from "focus-trap-react";
 import { AnimatedMenuButton } from "./AnimatedMenuButton";
 
-// Navigation sections for SPA
+// Navigation sections for SPA - Updated to English with modern football agency sections
 const navLinks = [
-  { name: "Hjem", href: "#hjem", id: "hjem" },
-  { name: "Om Oss", href: "#om-oss", id: "om-oss" },
-  { name: "Spillere", href: "#spillere", id: "spillere" },
-  { name: "Kontakt", href: "#kontakt", id: "kontakt" },
+  { name: "Football", href: "#football", id: "football" },
+  {
+    name: "Social Responsibility",
+    href: "#social-responsibility",
+    id: "social-responsibility",
+  },
+  { name: "Our Team", href: "#our-team", id: "our-team" },
+  { name: "Contact", href: "#contact", id: "contact" },
 ];
 
 // Modern desktop link styling with improved typography
@@ -31,7 +35,7 @@ const desktopLinkClasses = (isActive: boolean) =>
   );
 
 // Mobile link styling with modern touch-friendly design
-const mobileLinkClasses = (isActive: boolean) =>
+const mobileLinkClasses = (isActive: Boolean) =>
   clsx(
     "font-sans font-medium tracking-[0.05em] no-underline",
     "text-lg py-6 px-8 block w-full text-center rounded-3xl",
@@ -47,28 +51,25 @@ const mobileLinkClasses = (isActive: boolean) =>
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("hjem");
+  const [activeSection, setActiveSection] = useState("football");
   const pathname = usePathname();
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   // Smooth scroll handler for SPA navigation
-  const handleNavClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-      e.preventDefault();
-      const element = document.getElementById(sectionId);
-      if (element) {
-        const offset = 80; // Height of navbar
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
-      }
-      setIsMobileMenuOpen(false);
-    },
-    []
-  );
+  const handleNavClick = useCallback((e: any, sectionId: string) => {
+    e.preventDefault();
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+    }
+    setIsMobileMenuOpen(false);
+  }, []);
 
   // Intersection Observer for active section detection
   useEffect(() => {
@@ -99,7 +100,7 @@ export default function Navbar() {
 
   // Lock scrolling and handle Escape key
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: any) => {
       if (e.key === "Escape") {
         setIsMobileMenuOpen(false);
       }
@@ -117,6 +118,8 @@ export default function Navbar() {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isMobileMenuOpen]);
+
+  if (!hasMounted) return null;
 
   // Animation variants
   const headerVariants = {
@@ -194,16 +197,16 @@ export default function Navbar() {
         variants={headerVariants}
         initial="hidden"
         animate="visible"
-        className="bg-gradient-to-b from-secondary to-secondary/90 backdrop-blur-xl shadow-xl sticky top-0 z-50"
+        className="bg-gradient-to-b from-white/95 to-white/90 dark:from-gray-900/95 dark:to-gray-900/90 backdrop-blur-xl shadow-lg sticky top-0 z-50 border-b border-gray-200/50 dark:border-gray-800/50"
       >
-        {/* MAIN FIX: Use the same container structure as hero */}
-        <div className="container  px-6">
-          <nav className="flex justify-between items-center h-28">
+        <div className="container mx-auto px-6">
+          <nav className="flex justify-between items-center h-20">
+            {/* Logo */}
             <Link
               href="/"
-              onClick={(e) => handleNavClick(e, "hjem")}
-              className="relative group rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-4 focus-visible:ring-offset-secondary"
-              aria-label="Gå til hjemmesiden for Tempo Sports Group"
+              onClick={(e) => handleNavClick(e, "football")}
+              className="relative group rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-4 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-900"
+              aria-label="Go to Tempo Sports Group homepage"
             >
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -213,10 +216,10 @@ export default function Navbar() {
                 <Image
                   src="/tempologo1black.png"
                   alt="Tempo Sports Group Logo"
-                  width={280}
-                  height={56}
+                  width={200}
+                  height={40}
                   priority
-                  className="w-48 lg:w-56 h-auto transition-all duration-300"
+                  className="w-40 lg:w-48 h-auto transition-all duration-300"
                 />
               </motion.div>
             </Link>
@@ -226,7 +229,7 @@ export default function Navbar() {
               variants={navContainerVariants}
               initial="hidden"
               animate="visible"
-              className="hidden md:flex items-center gap-2 lg:gap-3"
+              className="hidden md:flex items-center gap-1 lg:gap-2"
             >
               {navLinks.map((link) => (
                 <motion.li
@@ -287,30 +290,29 @@ export default function Navbar() {
               initial="hidden"
               animate="visible"
               exit="hidden"
-              className="md:hidden fixed inset-0 bg-gradient-to-br from-secondary via-secondary/98 to-primary/5 backdrop-blur-3xl z-50 flex flex-col"
+              className="md:hidden fixed inset-0 bg-gradient-to-br from-white/98 via-white/95 to-primary/5 dark:from-gray-900/98 dark:via-gray-900/95 dark:to-primary/10 backdrop-blur-3xl z-50 flex flex-col"
               role="dialog"
               aria-modal="true"
-              aria-label="Navigasjonsmeny"
+              aria-label="Navigation menu"
             >
-              {/* MAIN FIX: Use same container structure as hero */}
               <div className="container mx-auto px-6 flex-grow">
                 <div
                   onClick={(e) => e.stopPropagation()}
                   className="flex flex-col h-full"
                 >
                   {/* Mobile Menu Header */}
-                  <div className="flex justify-between items-center h-24 flex-shrink-0">
+                  <div className="flex justify-between items-center h-20 flex-shrink-0">
                     <motion.div
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 0.3, x: 0 }}
                       transition={{ delay: 0.2 }}
                     >
                       <Image
-                        src="/tempologo1black.png"
+                        src="/tempo.png"
                         alt="Tempo Sports Group Logo"
-                        width={200}
-                        height={40}
-                        className="w-36 h-auto"
+                        width={160}
+                        height={32}
+                        className="w-32 h-auto"
                       />
                     </motion.div>
                     <AnimatedMenuButton

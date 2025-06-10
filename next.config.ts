@@ -7,21 +7,19 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "images.unsplash.com",
-        port: "",
-        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "placehold.co",
-        port: "",
-        pathname: "/**",
       },
-      // ADD THIS FOR WIKIMEDIA LOGOS
       {
         protocol: "https",
         hostname: "upload.wikimedia.org",
-        port: "",
-        pathname: "/**",
+      },
+      // ADDED FOR SQUARESPACE IMAGES
+      {
+        protocol: "https",
+        hostname: "images.squarespace-cdn.com",
       },
     ],
   },

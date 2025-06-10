@@ -1,118 +1,488 @@
 // src/components/ContactSection.tsx
 
+"use client";
+
+import { motion } from "framer-motion";
+import { useState } from "react";
+
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  type: string;
+  position: string;
+  age: string;
+  message: string;
+}
+
 export default function ContactSection() {
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    phone: "",
+    type: "",
+    position: "",
+    age: "",
+    message: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Simulate form submission
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    setIsSubmitting(false);
+    setSubmitted(true);
+
+    // Reset form after success
+    setTimeout(() => {
+      setSubmitted(false);
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        type: "",
+        position: "",
+        age: "",
+        message: "",
+      });
+    }, 3000);
+  };
+
+  const contactMethods = [
+    {
+      icon: (
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1.5}
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+          />
+        </svg>
+      ),
+      title: "Email",
+      value: "hello@temposportsgroup.no",
+      href: "mailto:hello@temposportsgroup.no",
+    },
+    {
+      icon: (
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1.5}
+            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+          />
+        </svg>
+      ),
+      title: "Phone",
+      value: "+47 123 45 678",
+      href: "tel:+4712345678",
+    },
+    {
+      icon: (
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1.5}
+            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+          />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1.5}
+            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+        </svg>
+      ),
+      title: "Office",
+      value: "Storgata 1, 0155 Oslo",
+      href: "https://maps.google.com",
+    },
+  ];
+
   return (
-    <section className="bg-primary text-white py-16 sm:py-24 relative overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,0.1) 35px, rgba(255,255,255,0.1) 70px)`,
-          }}
-        />
+    <section
+      id="contact"
+      className="bg-gray-950 text-white py-24 relative overflow-hidden"
+    >
+      {/* Background Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-gray-950 to-green-900/20"></div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-green-600/10 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="container mx-auto px-6 text-center relative z-10">
-        <h2 className="text-3xl font-extrabold sm:text-4xl mb-4">
-          La oss bygge din fremtid sammen
-        </h2>
-        <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-          Ta det første steget mot en profesjonell fotballkarriere. Vi er her
-          for å veilede deg hele veien.
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a
-            href="mailto:kontakt@temposportsgroup.no"
-            className="group bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 flex items-center gap-3"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-            Send E-post
-          </a>
-
-          <a
-            href="tel:+4712345678"
-            className="group bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-all duration-200 flex items-center gap-3"
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-              />
-            </svg>
-            Ring Oss
-          </a>
-        </div>
-
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
-          <div>
-            <h3 className="font-semibold text-lg mb-2">Hovedkontor</h3>
-            <p className="opacity-80">
-              Storgata 1<br />
-              0155 Oslo
-            </p>
+      <div className="max-w-7xl mx-auto px-6 relative">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <div className="inline-block px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium text-gray-300 mb-4">
+            Get in Touch
           </div>
-          <div>
-            <h3 className="font-semibold text-lg mb-2">Åpningstider</h3>
-            <p className="opacity-80">
-              Man-Fre: 09:00-17:00
-              <br />
-              Lør-Søn: Etter avtale
-            </p>
-          </div>
-          <div>
-            <h3 className="font-semibold text-lg mb-2">Sosiale Medier</h3>
-            <div className="flex gap-4 justify-center sm:justify-start">
-              <a
-                href="#"
-                className="opacity-80 hover:opacity-100 transition-opacity"
+
+          <h2 className="text-5xl font-light text-white mb-4 tracking-tight">
+            Let's build your future together
+          </h2>
+
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto font-light">
+            Take the first step toward a professional football career. We're
+            here to guide you every step of the way.
+          </p>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          {/* Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8"
+          >
+            {submitted ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center py-12"
               >
-                <svg
-                  className="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                </svg>
-              </a>
-              <a
-                href="#"
-                className="opacity-80 hover:opacity-100 transition-opacity"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.013-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.345 2.525c.636-.247 1.363-.416 2.427-.465C9.795 2.013 10.148 2 12.315 2z"
-                    clipRule="evenodd"
+                <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg
+                    className="w-8 h-8 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-semibold text-white mb-2">
+                  Message Sent!
+                </h3>
+                <p className="text-gray-300">
+                  We'll get back to you within 24 hours.
+                </p>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Name */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Phone */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      placeholder="+47 123 45 678"
+                    />
+                  </div>
+
+                  {/* Inquiry Type */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Inquiry Type *
+                    </label>
+                    <select
+                      name="type"
+                      value={formData.type}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    >
+                      <option value="" className="bg-gray-900">
+                        Select type
+                      </option>
+                      <option value="player" className="bg-gray-900">
+                        Player Representation
+                      </option>
+                      <option value="parent" className="bg-gray-900">
+                        Parent/Guardian Inquiry
+                      </option>
+                      <option value="club" className="bg-gray-900">
+                        Club Partnership
+                      </option>
+                      <option value="media" className="bg-gray-900">
+                        Media Request
+                      </option>
+                      <option value="scholarship" className="bg-gray-900">
+                        Football Scholarship
+                      </option>
+                      <option value="other" className="bg-gray-900">
+                        Other
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                {formData.type === "player" && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    className="grid md:grid-cols-2 gap-6"
+                  >
+                    {/* Position */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        Playing Position
+                      </label>
+                      <select
+                        name="position"
+                        value={formData.position}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      >
+                        <option value="" className="bg-gray-900">
+                          Select position
+                        </option>
+                        <option value="goalkeeper" className="bg-gray-900">
+                          Goalkeeper
+                        </option>
+                        <option value="defender" className="bg-gray-900">
+                          Defender
+                        </option>
+                        <option value="midfielder" className="bg-gray-900">
+                          Midfielder
+                        </option>
+                        <option value="forward" className="bg-gray-900">
+                          Forward
+                        </option>
+                      </select>
+                    </div>
+
+                    {/* Age */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-300 mb-2">
+                        Age
+                      </label>
+                      <input
+                        type="number"
+                        name="age"
+                        value={formData.age}
+                        onChange={handleChange}
+                        min="16"
+                        max="35"
+                        className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        placeholder="Age"
+                      />
+                    </div>
+                  </motion.div>
+                )}
+
+                {/* Message */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                    Message *
+                  </label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={5}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                    placeholder="Tell us about your goals, experience, and how we can help you..."
                   />
-                </svg>
-              </a>
+                </div>
+
+                {/* Submit Button */}
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                      </svg>
+                    </>
+                  )}
+                </motion.button>
+              </form>
+            )}
+          </motion.div>
+
+          {/* Contact Information */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            {/* Contact Methods */}
+            <div className="space-y-6">
+              <h3 className="text-2xl font-semibold text-white mb-6">
+                Get in Touch
+              </h3>
+
+              {contactMethods.map((method, index) => (
+                <motion.a
+                  key={method.title}
+                  href={method.href}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.02 }}
+                  className="flex items-center gap-4 p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl hover:bg-white/10 transition-all duration-300 group"
+                >
+                  <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-gray-300 group-hover:text-white transition-colors">
+                    {method.icon}
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-400">{method.title}</div>
+                    <div className="text-white font-medium">{method.value}</div>
+                  </div>
+                </motion.a>
+              ))}
             </div>
-          </div>
+
+            {/* Office Hours */}
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+              <h4 className="text-lg font-semibold text-white mb-4">
+                Office Hours
+              </h4>
+              <div className="space-y-2 text-gray-300">
+                <div className="flex justify-between">
+                  <span>Monday - Friday</span>
+                  <span>09:00 - 17:00</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Saturday</span>
+                  <span>By appointment</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Sunday</span>
+                  <span>Closed</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Social Links */}
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
+              <h4 className="text-lg font-semibold text-white mb-4">
+                Follow Us
+              </h4>
+              <div className="flex gap-4">
+                {[
+                  { name: "Instagram", href: "#" },
+                  { name: "LinkedIn", href: "#" },
+                  { name: "Twitter", href: "#" },
+                ].map((social) => (
+                  <motion.a
+                    key={social.name}
+                    href={social.href}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all duration-200"
+                  >
+                    <span className="text-sm font-medium">
+                      {social.name[0]}
+                    </span>
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

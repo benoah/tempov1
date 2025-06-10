@@ -1,32 +1,40 @@
 // src/app/page.tsx
+
 import Hero from "./components/Hero";
 import PlayerShowcase from "./components/PlayerShowcase";
 import AboutSection from "./components/AboutSection";
 import ServicesSection from "./components/ServicesSection";
 import ContactSection from "./components/ContactSection";
-import VideoSection from "./components/VideoSection"; // Import the new VideoSection component
+import VideoSection from "./components/VideoSection";
+import SocialResponsibilitySection from "./components/SocialResponsibilitySection";
+import OurTeamSection from "./components/OurTeamSection";
 
 export default function Home() {
   return (
     <>
+      {/* Hero Section - Welcome to Tempo family */}
       <Hero />
+
+      {/* Video Background Section - Football Excellence */}
+      <VideoSection videoSrc="/images/hero-football.mp4" />
+
+      {/* Social Responsibility Section - National Football Scholarship */}
+      <SocialResponsibilitySection />
+
+      {/* About Section */}
       <AboutSection />
+
+      {/* Services Section - Football */}
       <ServicesSection />
+
+      {/* Our Team Section */}
+      <OurTeamSection />
+
+      {/* Players Section - Our Team */}
       <PlayerShowcase />
+
+      {/* Contact Section */}
       <ContactSection />
-      {/* This is the new Video Section, placed after the ContactSection */}
-      {/* Remember to replace the 'videoSrc' with your actual video URL! */}
-      <VideoSection videoSrc="/videos/my-football-video.mp4">
-        {" "}
-        {/* <--- Changed videoSrc here */}
-        {/* Content that will appear on top of the video background */}
-        <h2 className="text-4xl font-extrabold text-white sm:text-5xl leading-tight drop-shadow-lg">
-          Se Våre Spillere I Aksjon!
-        </h2>
-        <p className="mt-4 text-xl text-gray-200 max-w-2xl mx-auto">
-          Opplev spenningen og ferdighetene som gjør våre spillere unike.
-        </p>
-      </VideoSection>
     </>
   );
 }

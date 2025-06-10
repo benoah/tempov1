@@ -20,9 +20,9 @@ const geistMono = Geist_Mono({
 
 // 2. Oppdater metadata med din egen informasjon
 export const metadata: Metadata = {
-  title: "Ditt Agentur AS - Fotballagentur", // Endre til ditt navn
+  title: "Tempo Sports Group - Fotballagentur",
   description:
-    "Vi representerer profesjonelle fotballspillere og bygger karrierer.", // Endre til din beskrivelse
+    "Tempo Sports Group representerer profesjonelle fotballspillere og bygger karrierebaner.",
 };
 
 export default function RootLayout({
