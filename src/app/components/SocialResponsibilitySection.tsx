@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
@@ -54,7 +53,7 @@ export default function SocialResponsibilitySection() {
             FOOTBALL FOR EVERYONE
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl font-light">
-            We started Tempo because we believe talent shouldn't be limited by
+            We started Tempo because we believe talent should not be limited by
             money, background, or borders. Everyone deserves a chance — and this
             is how we help.
           </p>

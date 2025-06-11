@@ -61,8 +61,9 @@ export default function VideoSection({
               viewport={{ once: true }}
             >
               From seasoned pros to rising talents, we guide every athlete with
-              strategy, care, and precision. Whether you're chasing your next
-              contract or just starting your journey — we're in your corner.
+              strategy, care, and precision. Whether you&apos;re chasing your
+              next contract or just starting your journey — we&apos;re in your
+              corner.
             </motion.p>
 
             <motion.div

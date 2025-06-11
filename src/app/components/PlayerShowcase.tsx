@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { useState, useCallback, useMemo } from "react";
+import { useState } from "react";
 
 // Types
 interface Player {
@@ -18,7 +18,6 @@ interface Player {
 
 interface PlayerCardProps {
   player: Player;
-  index: number;
   priority?: boolean;
 }
 
@@ -121,7 +120,7 @@ function PlayerImage({
 }
 
 // Card Component
-function PlayerCard({ player, index, priority }: PlayerCardProps) {
+function PlayerCard({ player, priority }: PlayerCardProps) {
   const [hovered, setHovered] = useState(false);
   const reduceMotion = useReducedMotion();
 
@@ -264,12 +263,7 @@ export default function PlayerShowcase() {
           viewport={{ once: true, margin: "-100px" }}
         >
           {PLAYERS_DATA.map((player, index) => (
-            <PlayerCard
-              key={player.id}
-              player={player}
-              index={index}
-              priority={index < 3}
-            />
+            <PlayerCard key={player.id} player={player} priority={index < 3} />
           ))}
         </motion.div>
 
