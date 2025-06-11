@@ -1,389 +1,382 @@
-// src/components/ServicesSection.tsx
-
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { CheckCircle, LucideIcon } from "lucide-react";
+import { useMemo, useState } from "react";
 
-// Modern Professional Icons
-const ContractIcon = () => (
-  <svg
-    className="h-8 w-8 text-white"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-    />
-  </svg>
-);
+// ============================================
+// Type Definitions
+// ============================================
+interface Service {
+  id: string;
+  title: string;
+  description?: string;
+  icon?: LucideIcon;
+}
 
-const HealthIcon = () => (
-  <svg
-    className="h-8 w-8 text-white"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-    />
-  </svg>
-);
+interface ServiceItemProps {
+  service: Service;
+  index: number;
+  isExpanded?: boolean;
+  onToggle?: (id: string) => void;
+}
 
-const BrainIcon = () => (
-  <svg
-    className="h-8 w-8 text-white"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-    />
-  </svg>
-);
+// ============================================
+// Design System
+// ============================================
+const DESIGN_SYSTEM = {
+  colors: {
+    accent: "#00DC82",
+    text: {
+      primary: "#000000",
+      secondary: "#4B5563",
+      muted: "#6B7280",
+    },
+  },
+  animation: {
+    duration: 0.5,
+    stagger: 0.08,
+    ease: [0.25, 0.46, 0.45, 0.94],
+    spring: { damping: 20, stiffness: 300 },
+  },
+  typography: {
+    h2: "clamp(2.5rem, 5vw + 1rem, 3.75rem)",
+    body: "clamp(1rem, 1.5vw, 1.125rem)",
+  },
+  spacing: {
+    container: "max-w-[90rem] mx-auto px-6 lg:px-20",
+    section: "py-24 md:py-32",
+  },
+} as const;
 
-const MediaIcon = () => (
-  <svg
-    className="h-8 w-8 text-white"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-    />
-  </svg>
-);
-
-const NetworkIcon = () => (
-  <svg
-    className="h-8 w-8 text-white"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-    />
-  </svg>
-);
-
-const SocialIcon = () => (
-  <svg
-    className="h-8 w-8 text-white"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={2}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-    />
-  </svg>
-);
-
-const mainServices = [
+// ============================================
+// Data Configuration
+// ============================================
+const SERVICES_DATA: Service[] = [
   {
+    id: "clubs-contracts",
     title: "Clubs & Contracts",
     description:
-      "Daily contact with clubs nationally and internationally. Our track record of maximizing deals is unmatched in Norway.",
-    icon: <ContractIcon />,
-    features: [
-      "Contract negotiations",
-      "Financial security",
-      "Best possible terms",
-      "International network",
-    ],
-    color: "from-blue-600 to-blue-800",
+      "Daily contact with top clubs nationally and internationally. Expert negotiation for optimal terms.",
   },
   {
+    id: "health-department",
     title: "Health Department",
     description:
-      "The only agency in Scandinavia with its own health department. Annual checkups and injury prevention.",
-    icon: <HealthIcon />,
-    features: [
-      "Annual health checkups",
-      "Injury prevention",
-      "Mental health support",
-      "Rehabilitation guidance",
-    ],
-    color: "from-green-600 to-green-800",
+      "Scandinavia's only agency with dedicated health department. Annual checkups and injury prevention.",
   },
   {
+    id: "cognitive-training",
     title: "Cognitive Training",
     description:
       "Mental performance optimization and psychological support for peak athletic performance.",
-    icon: <BrainIcon />,
-    features: [
-      "Mental coaching",
-      "Performance psychology",
-      "Stress management",
-      "Focus enhancement",
-    ],
-    color: "from-purple-600 to-purple-800",
   },
-];
-
-const additionalServices = [
   {
+    id: "media-sponsorships",
     title: "Media & Sponsorships",
     description:
-      "PR handling, media training, and endorsement deal negotiations.",
-    icon: <MediaIcon />,
-    color: "from-orange-500 to-red-600",
+      "Strategic PR handling and endorsement negotiations with calculated media exposure.",
   },
   {
+    id: "global-network",
     title: "Global Network",
-    description: "Established partnerships with teams and agencies worldwide.",
-    icon: <NetworkIcon />,
-    color: "from-cyan-500 to-blue-600",
+    description:
+      "Established partnerships with teams and agencies worldwide for international opportunities.",
   },
   {
+    id: "social-responsibility",
     title: "Social Responsibility",
     description:
-      "National football scholarships and community support programs.",
-    icon: <SocialIcon />,
-    color: "from-emerald-500 to-green-600",
+      "National football scholarships and community programs supporting young talent development.",
   },
 ];
 
-export default function ServicesSection() {
-  const [hoveredService, setHoveredService] = useState<number | null>(null);
-
-  const containerVariants = {
+// ============================================
+// Animation Variants
+// ============================================
+const animationVariants = {
+  container: {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
+        staggerChildren: DESIGN_SYSTEM.animation.stagger,
+        delayChildren: 0.1,
       },
     },
+  },
+  item: {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: DESIGN_SYSTEM.animation.duration,
+        ease: DESIGN_SYSTEM.animation.ease,
+      },
+    },
+  },
+  fadeInUp: {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: DESIGN_SYSTEM.animation.ease,
+      },
+    },
+  },
+};
+
+// ============================================
+// Sub-components
+// ============================================
+
+// Service Item Component with Expandable Details
+function ServiceItem({
+  service,
+  index,
+  isExpanded,
+  onToggle,
+}: ServiceItemProps) {
+  const [isHovered, setIsHovered] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+
+  const handleClick = () => {
+    if (onToggle && service.description) {
+      onToggle(service.id);
+    }
   };
 
-  const itemVariants = {
-    hidden: { y: 60, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleClick();
+    }
   };
 
   return (
-    <section
-      id="football"
-      className="relative bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-24 sm:py-32 overflow-hidden"
+    <motion.article
+      variants={animationVariants.item}
+      className="relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=80 height=80 viewBox=0 0 80 80 xmlns=http://www.w3.org/2000/svg%3E%3Cg fill=none fill-rule=evenodd%3E%3Cg fill=%23000000 fill-opacity=0.1%3E%3Cpath d=M0 0h80v80H0V0zm20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z' fill-opacity=0.05/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
-      </div>
+      <div
+        role={service.description ? "button" : undefined}
+        tabIndex={service.description ? 0 : undefined}
+        onClick={handleClick}
+        onKeyDown={handleKeyDown}
+        className={`
+          flex items-start gap-4 py-3 transition-all duration-200
+          ${service.description ? "cursor-pointer" : ""}
+          ${isHovered ? "translate-x-2" : "translate-x-0"}
+          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 
+          focus-visible:ring-[#00DC82] rounded-lg px-2 -mx-2
+        `}
+        aria-expanded={service.description ? isExpanded : undefined}
+      >
+        {/* Service Number */}
+        <span className="text-sm font-mono text-gray-400 mt-0.5 select-none">
+          {String(index + 1).padStart(2, "0")}
+        </span>
 
-      <div className="container mx-auto px-6 relative">
-        {/* Header Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center max-w-4xl mx-auto mb-20"
-        >
-          <div className="inline-flex items-center gap-3 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full mb-6">
-            <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-            <span className="font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider text-sm">
-              Complete Service Excellence
-            </span>
-          </div>
+        {/* Icon */}
+        <div className="relative mt-0.5">
+          <CheckCircle
+            className={`
+              w-5 h-5 transition-all duration-300
+              ${
+                isHovered || isExpanded
+                  ? "text-[#00DC82] scale-110"
+                  : "text-gray-400"
+              }
+            `}
+            aria-hidden="true"
+          />
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight mb-6">
-            We do{" "}
-            <span className="bg-gradient-to-r from-blue-600 via-green-500 to-purple-600 bg-clip-text text-transparent">
-              more
-            </span>
-          </h2>
+          {/* Pulse effect on hover */}
+          {isHovered && !shouldReduceMotion && (
+            <div className="absolute inset-0 -m-2">
+              <div className="w-9 h-9 bg-[#00DC82] rounded-full opacity-20 animate-ping" />
+            </div>
+          )}
+        </div>
 
-          <p className="text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl mx-auto">
-            We differ from traditional agencies that limit to only contract
-            negotiations. Our aim is to take care of every aspect of our
-            clients' careers with complete service coverage.
-          </p>
+        {/* Content */}
+        <div className="flex-1">
+          <h3
+            className={`
+            text-lg font-medium transition-colors duration-200
+            ${isHovered || isExpanded ? "text-black" : "text-gray-800"}
+          `}
+          >
+            {service.title}
+          </h3>
 
-          <div className="w-32 h-1 bg-gradient-to-r from-blue-500 via-green-500 to-purple-500 rounded-full mx-auto mt-8"></div>
-        </motion.div>
-
-        {/* Main Services Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid lg:grid-cols-3 gap-8 mb-16"
-        >
-          {mainServices.map((service, index) => (
+          {/* Expandable Description */}
+          {service.description && (
             <motion.div
-              key={service.title}
-              variants={itemVariants}
-              whileHover={{
-                scale: 1.02,
-                transition: { duration: 0.2 },
+              initial={false}
+              animate={{
+                height: isExpanded ? "auto" : 0,
+                opacity: isExpanded ? 1 : 0,
               }}
-              onHoverStart={() => setHoveredService(index)}
-              onHoverEnd={() => setHoveredService(null)}
-              className="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-200/50 dark:border-gray-700/50 overflow-hidden"
+              transition={{
+                duration: 0.3,
+                ease: "easeInOut",
+              }}
+              className="overflow-hidden"
             >
-              {/* Background Gradient */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-3xl`}
-              ></div>
-
-              {/* Icon */}
-              <div
-                className={`relative inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${service.color} mb-6 shadow-lg`}
-              >
-                {service.icon}
-              </div>
-
-              {/* Content */}
-              <div className="relative">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                  {service.title}
-                </h3>
-
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-                  {service.description}
-                </p>
-
-                {/* Features List */}
-                <ul className="space-y-3">
-                  {service.features.map((feature, featureIndex) => (
-                    <motion.li
-                      key={featureIndex}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: featureIndex * 0.1, duration: 0.5 }}
-                      className="flex items-center gap-3"
-                    >
-                      <div
-                        className={`w-2 h-2 rounded-full bg-gradient-to-r ${service.color}`}
-                      ></div>
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
-                        {feature}
-                      </span>
-                    </motion.li>
-                  ))}
-                </ul>
-
-                {/* Hover Effect */}
-                <motion.div
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: hoveredService === index ? 1 : 0 }}
-                  transition={{ duration: 0.3 }}
-                  className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r ${service.color} rounded-full`}
-                  style={{ transformOrigin: "left" }}
-                ></motion.div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Additional Services */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid md:grid-cols-3 gap-6 mb-16"
-        >
-          {additionalServices.map((service, index) => (
-            <motion.div
-              key={service.title}
-              variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
-              className="group relative bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200/50 dark:border-gray-700/50"
-            >
-              <div
-                className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${service.color} mb-4 shadow-md`}
-              >
-                {service.icon}
-              </div>
-
-              <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-                {service.title}
-              </h4>
-
-              <p className="text-sm text-gray-600 dark:text-gray-300">
+              <p className="text-sm text-gray-600 mt-2 pr-4 leading-relaxed">
                 {service.description}
               </p>
             </motion.div>
-          ))}
-        </motion.div>
+          )}
+        </div>
 
-        {/* The Tempo Way Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="max-w-4xl mx-auto text-center"
-        >
-          <div className="bg-gradient-to-br from-white/90 to-gray-50/90 dark:from-gray-800/90 dark:to-gray-900/90 backdrop-blur-sm rounded-3xl p-12 shadow-xl border border-gray-200/50 dark:border-gray-700/50">
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-              The <span className="text-blue-600">Tempo</span> Way
-            </h3>
+        {/* Expand Indicator */}
+        {service.description && (
+          <svg
+            className={`
+              w-4 h-4 mt-1 text-gray-400 transition-transform duration-200
+              ${isExpanded ? "rotate-180" : "rotate-0"}
+            `}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        )}
+      </div>
 
-            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
-              We pride ourselves in our personal relationship with our clients,
-              based on trust, understanding and mutual aim. Our established
-              network across the footballing world is the result of transparent
-              and respectful conduct.
+      {/* Accent Line */}
+      <motion.div
+        className="absolute left-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#00DC82] to-transparent"
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: isHovered ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        style={{ transformOrigin: "center" }}
+      />
+    </motion.article>
+  );
+}
+
+// ============================================
+// Main ServicesSection Component
+// ============================================
+export default function ServicesSection() {
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
+  const shouldReduceMotion = useReducedMotion();
+
+  const toggleExpanded = (id: string) => {
+    setExpandedItems((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };
+
+  const containerClass = useMemo(
+    () => `${DESIGN_SYSTEM.spacing.container} ${DESIGN_SYSTEM.spacing.section}`,
+    []
+  );
+
+  return (
+    <section className="bg-gray-50" aria-labelledby="services-heading">
+      <div className={containerClass}>
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+          {/* Left: Statement */}
+          <motion.div
+            variants={animationVariants.fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <h2
+              id="services-heading"
+              className="font-bold text-black mb-6 leading-[1.1]"
+              style={{ fontSize: DESIGN_SYSTEM.typography.h2 }}
+            >
+              BUILT FOR
+              <br />
+              <span className="relative">
+                THE MODERN PLAYER
+                <span
+                  className="absolute -bottom-2 left-0 w-full h-1 bg-[#00DC82] opacity-20"
+                  aria-hidden="true"
+                />
+              </span>
+            </h2>
+            <p
+              className="text-gray-600 leading-relaxed max-w-xl"
+              style={{ fontSize: DESIGN_SYSTEM.typography.body }}
+            >
+              From your first deal to your final game, we’re with you. Tempo
+              handles every part of your career — contracts, health, mindset,
+              media — so you can focus on performing.
             </p>
 
-            <div className="grid md:grid-cols-3 gap-6 text-center">
-              <div className="space-y-2">
-                <div className="text-2xl font-bold text-blue-600">2014</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">
-                  Established
+            <blockquote className="mt-8 border-l-4 border-[#00DC82] pl-6 text-black text-lg italic">
+              “They didn’t just negotiate my contract. They helped me become a
+              better pro.”
+              <footer className="mt-2 text-sm text-gray-500">
+                — Tempo Client
+              </footer>
+            </blockquote>
+
+            {/* Optional: Stats or Additional Info */}
+            <div className="mt-12 pt-8 border-t border-gray-200">
+              <div className="grid grid-cols-2 gap-8">
+                <div>
+                  <div className="text-3xl font-light text-black">6</div>
+                  <div className="text-sm text-gray-500 mt-1">
+                    Core Services
+                  </div>
                 </div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-2xl font-bold text-green-600">100%</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">
-                  Client Focus
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-2xl font-bold text-purple-600">24/7</div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">
-                  Support
+                <div>
+                  <div className="text-3xl font-light text-black">24/7</div>
+                  <div className="text-sm text-gray-500 mt-1">Support</div>
                 </div>
               </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+
+          {/* Right: Services List */}
+          <motion.div
+            variants={
+              !shouldReduceMotion ? animationVariants.container : undefined
+            }
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="space-y-2"
+            role="list"
+          >
+            {SERVICES_DATA.map((service, index) => (
+              <div key={service.id} role="listitem">
+                <ServiceItem
+                  service={service}
+                  index={index}
+                  isExpanded={expandedItems.has(service.id)}
+                  onToggle={toggleExpanded}
+                />
+              </div>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );

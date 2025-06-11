@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // ... your other configurations
   images: {
     remotePatterns: [
       {
@@ -16,10 +15,22 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "upload.wikimedia.org",
       },
-      // ADDED FOR SQUARESPACE IMAGES
       {
         protocol: "https",
         hostname: "images.squarespace-cdn.com",
+      },
+      // ✅ Added for player images
+      {
+        protocol: "https",
+        hostname: "images.dreamstime.com",
+      },
+      {
+        protocol: "https",
+        hostname: "focusedcollection.com",
+      },
+      {
+        protocol: "https",
+        hostname: "johngress.com",
       },
     ],
   },

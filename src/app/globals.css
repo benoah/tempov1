@@ -1,64 +1,7 @@
+/* Font import MUST come first */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* Then Tailwind */
 @import "tailwindcss";
 
-:root {
-  --font-geist-sans: "Geist Sans", system-ui, sans-serif;
-  --font-geist-mono: "Geist Mono", monospace;
-
-  /* Lysmodus (Standard) */
-  --background: #f6f3ec;
-  --foreground: #010103;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Mørkemodus */
-    --background: #010103;
-    --foreground: #f6f3ec;
-  }
-}
-/* globals.css */
-html {
-  scroll-behavior: smooth;
-}
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url("/paper-texture.jpg");
-  background-size: cover;
-  background-position: center;
-  opacity: 0.02;
-  pointer-events: none;
-  z-index: -1;
-}
-/* Paper texture overlay */
-.paper-texture-overlay {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0.03;
-  mix-blend-mode: multiply;
-}
-
-/* Ensure content is above the texture */
-.content-layer {
-  position: relative;
-  z-index: 2;
-}
-
-.custom-primary-textured-bg {
-  /* Ensure the background color is below the gradient if you want the dots to be lighter/darker than the base color */
-  background-color: #25723e; /* Your primary color */
-  background-image: radial-gradient(
-      circle at 1px 1px,
-      rgba(255, 255, 255, 0.05) 1px,
-      transparent 0%
-    ),
-    radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.05) 1px, transparent 0%);
-  background-size: 8px 8px; /* Size of the repeating pattern */
-  background-position: 0 0, 4px 4px; /* Offset the second gradient for a staggered dot effect */
-}
+/* That's it! Remove all other styles */

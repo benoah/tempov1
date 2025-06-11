@@ -1,65 +1,45 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import clsx from "clsx";
-import { FocusTrap } from "focus-trap-react";
-import { AnimatedMenuButton } from "./AnimatedMenuButton";
+import Image from "next/image";
+import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
-// Navigation sections for SPA - Updated to English with modern football agency sections
 const navLinks = [
   { name: "Football", href: "#football", id: "football" },
+  { name: "Our Team", href: "#our-team", id: "our-team" },
   {
     name: "Social Responsibility",
     href: "#social-responsibility",
     id: "social-responsibility",
   },
-  { name: "Our Team", href: "#our-team", id: "our-team" },
   { name: "Contact", href: "#contact", id: "contact" },
 ];
 
-// Modern desktop link styling with improved typography
-const desktopLinkClasses = (isActive: boolean) =>
-  clsx(
-    "relative font-sans text-sm lg:text-[15px] font-medium tracking-[0.08em]",
-    "no-underline transition-all duration-300 ease-out py-2.5 px-5 block",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2",
-    "focus-visible:ring-offset-secondary rounded-full",
-    {
-      "text-primary font-semibold": isActive,
-      "text-foreground/70 hover:text-primary": !isActive,
-    }
-  );
-
-// Mobile link styling with modern touch-friendly design
-const mobileLinkClasses = (isActive: Boolean) =>
-  clsx(
-    "font-sans font-medium tracking-[0.05em] no-underline",
-    "text-lg py-6 px-8 block w-full text-center rounded-3xl",
-    "transition-all duration-300 ease-out transform",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-    "focus-visible:ring-offset-4 focus-visible:ring-offset-secondary",
-    {
-      "bg-primary text-primary-foreground shadow-2xl scale-[1.02]": isActive,
-      "text-foreground/80 hover:text-primary hover:bg-primary/5 hover:shadow-lg active:scale-95":
-        !isActive,
-    }
-  );
-
 export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("football");
-  const pathname = usePathname();
-  const [hasMounted, setHasMounted] = useState(false);
+
   useEffect(() => {
-    setHasMounted(true);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Smooth scroll handler for SPA navigation
-  const handleNavClick = useCallback((e: any, sectionId: string) => {
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMobileMenuOpen]);
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: string
+  ) => {
     e.preventDefault();
     const element = document.getElementById(sectionId);
     if (element) {
@@ -69,310 +49,176 @@ export default function Navbar() {
       window.scrollTo({ top: offsetPosition, behavior: "smooth" });
     }
     setIsMobileMenuOpen(false);
-  }, []);
-
-  // Intersection Observer for active section detection
-  useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "-20% 0px -70% 0px",
-      threshold: 0,
-    };
-
-    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(handleIntersect, observerOptions);
-
-    // Observe all sections
-    navLinks.forEach((link) => {
-      const element = document.getElementById(link.id);
-      if (element) observer.observe(element);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Lock scrolling and handle Escape key
-  useEffect(() => {
-    const handleKeyDown = (e: any) => {
-      if (e.key === "Escape") {
-        setIsMobileMenuOpen(false);
-      }
-    };
-
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-      document.addEventListener("keydown", handleKeyDown);
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isMobileMenuOpen]);
-
-  if (!hasMounted) return null;
-
-  // Animation variants
-  const headerVariants = {
-    hidden: { y: -20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1] },
-    },
-  };
-
-  const navContainerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-        staggerDirection: 1,
-      },
-    },
-  };
-
-  const navLinkVariants = {
-    hidden: { y: -20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 200,
-        damping: 20,
-      },
-    },
-  };
-
-  const mobileMenuVariants = {
-    hidden: {
-      opacity: 0,
-      scale: 0.95,
-      transition: { duration: 0.2, ease: "easeIn" },
-    },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.3, ease: "easeOut" },
-    },
-  };
-
-  const mobileNavLinksContainerVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const mobileNavLinkVariants = {
-    hidden: { x: -50, opacity: 0 },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 30,
-      },
-    },
   };
 
   return (
     <>
+      {/* Progress Bar */}
+      <div
+        className="fixed top-0 left-0 h-[3px] bg-[#00DC82] z-[60] transition-all duration-200"
+        style={{ width: "0%" }}
+      />
+
+      {/* Main Navigation */}
       <motion.header
-        variants={headerVariants}
-        initial="hidden"
-        animate="visible"
-        className="bg-gradient-to-b from-white/95 to-white/90 dark:from-gray-900/95 dark:to-gray-900/90 backdrop-blur-xl shadow-lg sticky top-0 z-50 border-b border-gray-200/50 dark:border-gray-800/50"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className={`fixed top-0 left-0 w-full right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? "bg-white/95 backdrop-blur-sm shadow-sm"
+            : "bg-transparent"
+        }`}
       >
-        <div className="container mx-auto px-6">
-          <nav className="flex justify-between items-center h-20">
-            {/* Logo */}
-            <Link
-              href="/"
-              onClick={(e) => handleNavClick(e, "football")}
-              className="relative group rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-4 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-900"
-              aria-label="Go to Tempo Sports Group homepage"
-            >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        <nav className="max-w-[1440px] mx-auto px-2 sm:px-0 md:px-8 lg:px-10 flex justify-between items-center h-20">
+          {/* Logo */}
+          <Link
+            href="/"
+            className="relative z-10 mr-16 sm:mr-0"
+            aria-label="Go to homepage"
+          >
+            <div className="relative w-28 h-28">
+              <Image
+                src="/tempologo1white.png"
+                alt="Tempo Logo - White"
+                fill
+                className={`absolute inset-0 object-contain transition-opacity duration-300 ease-in-out ${
+                  isScrolled ? "opacity-0" : "opacity-100"
+                }`}
+                priority
+              />
+              <Image
+                src="/tempologo1black.png"
+                alt="Tempo Logo - Black"
+                fill
+                className={`absolute inset-0 object-contain transition-opacity duration-300 ease-in-out ${
+                  isScrolled ? "opacity-100" : "opacity-0"
+                }`}
+                priority
+              />
+              <div className="absolute inset-0 rounded-md transition-transform duration-300 hover:scale-105 will-change-transform" />
+            </div>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.id)}
+                className={`text-sm font-medium tracking-wide transition-colors ${
+                  isScrolled
+                    ? "text-gray-700 hover:text-black"
+                    : "text-white hover:text-[#00DC82]"
+                }`}
               >
-                <Image
-                  src="/tempologo1black.png"
-                  alt="Tempo Sports Group Logo"
-                  width={200}
-                  height={40}
-                  priority
-                  className="w-40 lg:w-48 h-auto transition-all duration-300"
-                />
-              </motion.div>
-            </Link>
-
-            {/* Desktop Navigation */}
-            <motion.ul
-              variants={navContainerVariants}
-              initial="hidden"
-              animate="visible"
-              className="hidden md:flex items-center gap-1 lg:gap-2"
-            >
-              {navLinks.map((link) => (
-                <motion.li
-                  key={link.id}
-                  variants={navLinkVariants}
-                  whileHover={{ y: -1 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.id)}
-                    className={desktopLinkClasses(activeSection === link.id)}
-                    aria-current={
-                      activeSection === link.id ? "page" : undefined
-                    }
-                  >
-                    <span className="relative z-10">{link.name}</span>
-                    {activeSection === link.id && (
-                      <motion.div
-                        className="absolute inset-0 bg-primary/10 rounded-full -z-10"
-                        layoutId="active-section-indicator-desktop"
-                        transition={{
-                          type: "spring",
-                          bounce: 0.25,
-                          duration: 0.6,
-                        }}
-                      />
-                    )}
-                    <motion.div
-                      className="absolute bottom-0 left-1/2 w-1 h-1 bg-primary rounded-full -translate-x-1/2"
-                      initial={{ scale: 0, opacity: 0 }}
-                      whileHover={{ scale: 1, opacity: 1 }}
-                      transition={{ duration: 0.2 }}
-                    />
-                  </Link>
-                </motion.li>
-              ))}
-            </motion.ul>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <AnimatedMenuButton
-                isOpen={isMobileMenuOpen}
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                {link.name.toUpperCase()}
+              </Link>
+            ))}
+          </div>
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden relative z-50 p-2"
+            aria-label="Toggle menu"
+          >
+            <div className="w-6 h-5 flex flex-col justify-between">
+              <span
+                className={`block h-0.5 w-full transition-all duration-300 ${
+                  isMobileMenuOpen
+                    ? "rotate-45 translate-y-2 bg-black"
+                    : isScrolled
+                    ? "bg-black"
+                    : "bg-white"
+                }`}
+              />
+              <span
+                className={`block h-0.5 w-full transition-all duration-300 ${
+                  isMobileMenuOpen
+                    ? "opacity-0"
+                    : isScrolled
+                    ? "bg-black"
+                    : "bg-white"
+                }`}
+              />
+              <span
+                className={`block h-0.5 w-full transition-all duration-300 ${
+                  isMobileMenuOpen
+                    ? "-rotate-45 -translate-y-2 bg-black"
+                    : isScrolled
+                    ? "bg-black"
+                    : "bg-white"
+                }`}
               />
             </div>
-          </nav>
-        </div>
+          </button>
+        </nav>
       </motion.header>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <FocusTrap active={isMobileMenuOpen}>
+          <>
+            {/* Backdrop */}
             <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 z-40 md:hidden"
               onClick={() => setIsMobileMenuOpen(false)}
-              variants={mobileMenuVariants}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              className="md:hidden fixed inset-0 bg-gradient-to-br from-white/98 via-white/95 to-primary/5 dark:from-gray-900/98 dark:via-gray-900/95 dark:to-primary/10 backdrop-blur-3xl z-50 flex flex-col"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Navigation menu"
+            />
+
+            {/* Mobile Menu Panel */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white z-40 md:hidden overflow-y-auto max-h-screen"
             >
-              <div className="container mx-auto px-6 flex-grow">
-                <div
-                  onClick={(e) => e.stopPropagation()}
-                  className="flex flex-col h-full"
-                >
-                  {/* Mobile Menu Header */}
-                  <div className="flex justify-between items-center h-20 flex-shrink-0">
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 0.3, x: 0 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <Image
-                        src="/tempo.png"
-                        alt="Tempo Sports Group Logo"
-                        width={160}
-                        height={32}
-                        className="w-32 h-auto"
-                      />
-                    </motion.div>
-                    <AnimatedMenuButton
-                      isOpen={isMobileMenuOpen}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    />
-                  </div>
-
-                  {/* Mobile Navigation Links */}
-                  <motion.ul
-                    variants={mobileNavLinksContainerVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className="flex flex-col items-center justify-center gap-4 flex-grow py-8"
-                  >
-                    {navLinks.map((link, index) => (
-                      <motion.li
-                        key={link.id}
-                        variants={mobileNavLinkVariants}
-                        custom={index}
-                        className="w-full max-w-sm"
-                      >
-                        <Link
-                          href={link.href}
-                          onClick={(e) => handleNavClick(e, link.id)}
-                          className={mobileLinkClasses(
-                            activeSection === link.id
-                          )}
-                          aria-current={
-                            activeSection === link.id ? "page" : undefined
-                          }
-                        >
-                          <motion.span className="flex items-center justify-center gap-3">
-                            {activeSection === link.id && (
-                              <motion.span
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                className="w-2 h-2 bg-primary-foreground rounded-full"
-                              />
-                            )}
-                            {link.name}
-                          </motion.span>
-                        </Link>
-                      </motion.li>
-                    ))}
-                  </motion.ul>
-
-                  {/* Mobile Menu Footer */}
+              <nav className="px-6 py-8">
+                {navLinks.map((link, index) => (
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                    className="py-8 text-center text-foreground/30 text-xs tracking-widest"
+                    key={link.name}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
                   >
-                    <p>TEMPO SPORTS GROUP &copy; 2024</p>
+                    <Link
+                      href={link.href}
+                      onClick={(e) => handleNavClick(e, link.id)}
+                      className="block py-4 text-lg font-medium text-gray-900 hover:text-[#00DC82] transition-colors"
+                    >
+                      {link.name}
+                    </Link>
                   </motion.div>
+                ))}
+
+                {/* Social Media Icons */}
+                <div className="mt-10 flex justify-center space-x-6">
+                  <a
+                    href="https://www.instagram.com/yourprofile"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="text-gray-600 hover:text-[#00DC82] transition-colors text-2xl"
+                  >
+                    <FaInstagram />
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/company/yourcompany"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    className="text-gray-600 hover:text-[#00DC82] transition-colors text-2xl"
+                  >
+                    <FaLinkedinIn />
+                  </a>
                 </div>
-              </div>
+              </nav>
             </motion.div>
-          </FocusTrap>
+          </>
         )}
       </AnimatePresence>
     </>

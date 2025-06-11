@@ -1,40 +1,34 @@
 // src/app/page.tsx
-
 import Hero from "./components/Hero";
-import PlayerShowcase from "./components/PlayerShowcase";
-import AboutSection from "./components/AboutSection";
-import ServicesSection from "./components/ServicesSection";
-import ContactSection from "./components/ContactSection";
 import VideoSection from "./components/VideoSection";
+import PlayerShowcase from "./components/PlayerShowcase";
+import ServicesSection from "./components/ServicesSection";
 import SocialResponsibilitySection from "./components/SocialResponsibilitySection";
 import OurTeamSection from "./components/OurTeamSection";
+import AboutSection from "./components/AboutSection";
+import ContactSection from "./components/ContactSection";
 
 export default function Home() {
   return (
-    <>
-      {/* Hero Section - Welcome to Tempo family */}
+    <main>
+      {/**
+     
+  
+       */}
       <Hero />
-
-      {/* Video Background Section - Football Excellence */}
-      <VideoSection videoSrc="/images/hero-football.mp4" />
-
-      {/* Social Responsibility Section - National Football Scholarship */}
-      <SocialResponsibilitySection />
-
-      {/* About Section */}
-      <AboutSection />
-
-      {/* Services Section - Football */}
-      <ServicesSection />
-
-      {/* Our Team Section */}
-      <OurTeamSection />
-
-      {/* Players Section - Our Team */}
+      <VideoSection videoSrc="/images/svart.mp4" />;
       <PlayerShowcase />
-
-      {/* Contact Section */}
+      {/* Moved to videos folder */}
+      {/* 1. Vision + Values (Start here to set the tone) */}
+      <AboutSection /> {/* <-- Move this up */}
+      {/* 2. What We Offer */}
+      <ServicesSection />
+      {/* 3. Why We Care */}
+      <SocialResponsibilitySection />
+      {/* 4. Who We Are */}
+      <OurTeamSection />
+      {/* 5. Call to Action */}
       <ContactSection />
-    </>
+    </main>
   );
 }
