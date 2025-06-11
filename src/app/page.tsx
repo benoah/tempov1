@@ -16,12 +16,10 @@ export default function Home() {
   
        */}
       <Hero />
-      <VideoSection videoSrc="/images/svart.mp4" />;
-      <PlayerShowcase />
-      {/* Moved to videos folder */}
+      <VideoSection />;{/* Moved to videos folder */}
       {/* 1. Vision + Values (Start here to set the tone) */}
       <AboutSection /> {/* <-- Move this up */}
-      {/* 2. What We Offer */}
+      <PlayerShowcase />
       <ServicesSection />
       {/* 3. Why We Care */}
       <SocialResponsibilitySection />

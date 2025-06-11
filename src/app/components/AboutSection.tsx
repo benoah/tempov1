@@ -4,7 +4,10 @@ import { motion } from "framer-motion";
 
 export default function AboutSection() {
   return (
-    <section className="bg-white py-24 md:py-32 border-t border-gray-100">
+    <section
+      id="about"
+      className="scroll-mt-20 bg-white py-24 md:py-32 border-t border-gray-100"
+    >
       <div className="max-w-[1440px] mx-auto px-6 lg:px-20">
         {/* Header */}
         <motion.div

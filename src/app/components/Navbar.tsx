@@ -8,6 +8,7 @@ import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 const navLinks = [
   { name: "Football", href: "#football", id: "football" },
+  { name: "About", href: "#about", id: "about" },
   { name: "Our Team", href: "#our-team", id: "our-team" },
   {
     name: "Social Responsibility",
