@@ -1,9 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
-import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import clsx from "clsx";
+import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 export default function Hero() {
   return (

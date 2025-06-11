@@ -47,7 +47,7 @@ export default function AboutSection() {
             </p>
 
             <blockquote className="mt-12 border-l-4 border-[#00DC82] pl-6 text-black text-lg italic">
-              "Tempo believed in me before anyone else did."
+              &ldquo;Tempo believed in me before anyone else did.&rdquo;
               <footer className="mt-2 text-sm text-gray-500">
                 — Former Tempo Athlete
               </footer>

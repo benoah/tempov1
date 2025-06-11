@@ -1,5 +1,3 @@
-// src/components/ContactSection.tsx - Ultra Minimal Version
-
 "use client";
 
 import { motion } from "framer-motion";
@@ -42,7 +40,7 @@ export default function ContactSection() {
 
             <div className="pt-8 border-t border-gray-200">
               <p className="text-gray-600">
-                Or send us a message and we'll respond within 24 hours.
+                Or send us a message and we&rsquo;ll respond within 24 hours.
               </p>
               <a
                 href="mailto:hello@temposportsgroup.no?subject=Player%20Inquiry"

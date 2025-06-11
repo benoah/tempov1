@@ -1,13 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, SVGMotionProps } from "framer-motion";
 
 type Props = {
   isOpen: boolean;
   onClick: () => void;
 };
 
-const Path = (props: any) => (
+// Define props specifically for SVG path elements
+const Path = (props: SVGMotionProps<SVGPathElement>) => (
   <motion.path
     fill="transparent"
     strokeWidth="2"
