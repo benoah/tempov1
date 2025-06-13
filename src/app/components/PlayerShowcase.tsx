@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 
 // Types
@@ -42,22 +42,31 @@ const PLAYERS_DATA: Player[] = [
     imageUrl: "/Mikail.jpg",
   },
   {
-    id: "erling-haaland",
-    name: "Erling Haaland",
-    position: "Angrep",
+    id: "mathias-martens",
+    name: "Mathias Martens",
+    position: "Agent",
     club: "Manchester City",
     nationality: "Norge",
     jerseyNumber: "9",
-    imageUrl: "/images/players/haaland.jpg",
+    imageUrl: "/Mathias.jpeg",
   },
   {
-    id: "caroline-graham",
-    name: "Caroline Graham",
-    position: "Forsvar",
+    id: "efe-özulu",
+    name: "Efe Özulu",
+    position: "Social Media Manager & Scout",
     club: "Chelsea FC",
     nationality: "Norge",
     jerseyNumber: "14",
-    imageUrl: "/images/players/graham.jpg",
+    imageUrl: "/efe.jpg",
+  },
+  {
+    id: "william-israelsen",
+    name: "William Israelsen",
+    position: " UEFA A Licence Coach and Scout",
+    club: "Chelsea FC",
+    nationality: "Norge",
+    jerseyNumber: "14",
+    imageUrl: "/efe.jpg",
   },
 ];
 
@@ -187,42 +196,13 @@ function PlayerCard({ player, priority }: PlayerCardProps) {
   );
 }
 
-// CTA Link
-function ViewAllPlayersLink() {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.6, delay: 0.4 }}
-      viewport={{ once: true }}
-      className="mt-16 text-center"
-    >
-      <Link
-        href="/players"
-        className="inline-flex items-center gap-2 text-[#00DC82] font-semibold hover:text-[#00B86F] transition-colors"
-      >
-        <span>Se alle 47 spillere</span>
-        <svg
-          className="w-5 h-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M17 8l4 4m0 0l-4 4m4-4H3"
-          />
-        </svg>
-      </Link>
-    </motion.div>
-  );
-}
-
 // Main Component
 export default function PlayerShowcase() {
   const reduceMotion = useReducedMotion();
+  const [showMore, setShowMore] = useState(false);
+
+  const firstRow = PLAYERS_DATA.slice(0, 3);
+  const secondRow = PLAYERS_DATA.slice(3);
 
   return (
     <section
@@ -254,7 +234,7 @@ export default function PlayerShowcase() {
           </p>
         </motion.header>
 
-        {/* Grid */}
+        {/* Første rad */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={!reduceMotion ? animation.container : undefined}
@@ -262,13 +242,56 @@ export default function PlayerShowcase() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
-          {PLAYERS_DATA.map((player, index) => (
+          {firstRow.map((player, index) => (
             <PlayerCard key={player.id} player={player} priority={index < 3} />
           ))}
         </motion.div>
 
-        {/* CTA */}
-        <ViewAllPlayersLink />
+        {/* Andre rad med animasjon */}
+        <AnimatePresence>
+          {showMore && (
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+            >
+              {secondRow.map((player) => (
+                <PlayerCard key={player.id} player={player} />
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* CTA-knapp */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="mt-16 text-center"
+        >
+          <button
+            onClick={() => setShowMore(!showMore)}
+            className="inline-flex items-center gap-2 text-[#00DC82] font-semibold hover:text-[#00B86F] transition-colors"
+          >
+            <span>{showMore ? "Vis færre" : "Se alle 47 spillere"}</span>
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </button>
+        </motion.div>
       </div>
     </section>
   );

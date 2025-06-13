@@ -69,7 +69,7 @@ export default function Hero() {
             >
               <div className="relative overflow-hidden rounded-xl shadow-2xl border border-white/10">
                 <video
-                  src="/images/hero-football.mp4"
+                  src="/images/svart1.mp4"
                   autoPlay
                   loop
                   muted
