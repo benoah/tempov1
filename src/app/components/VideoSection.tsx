@@ -28,7 +28,7 @@ export default function VideoSection({
 
   return (
     <section
-      id="football"
+      id="about-tempo"
       className={`scroll-mt-20 relative w-full bg-black text-white ${className}`}
     >
       <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-32">
@@ -39,6 +39,9 @@ export default function VideoSection({
           viewport={{ once: true }}
           className="grid lg:grid-cols-2 gap-20"
         >
+          {/* Hidden heading for accessibility & SEO */}
+          <h2 className="sr-only">Tempo Sports Group Services</h2>
+
           {/* Left Column */}
           <div>
             <motion.h2
@@ -61,9 +64,8 @@ export default function VideoSection({
               viewport={{ once: true }}
             >
               From seasoned pros to rising talents, we guide every athlete with
-              strategy, care, and precision. Whether you&apos;re chasing your
-              next contract or just starting your journey — we&apos;re in your
-              corner.
+              strategy, care, and precision. Whether you're chasing your next
+              contract or just starting your journey — we're in your corner.
             </motion.p>
 
             <motion.div
@@ -74,15 +76,16 @@ export default function VideoSection({
             >
               <a
                 href="#contact"
+                title="Contact Tempo Sports Group to become a client"
                 className="inline-block px-8 py-4 bg-white text-black font-medium rounded-full hover:bg-gray-100 transition-colors duration-300"
-                aria-label="Become a Tempo Client"
+                aria-label="Join Tempo Sports Group as a client"
               >
-                Become a Tempo Client
+                Join Tempo Sports Group
               </a>
             </motion.div>
           </div>
 
-          {/* Right Column */}
+          {/* Right Column – Services */}
           <div className="space-y-6">
             {services.map((service, index) => (
               <motion.div
