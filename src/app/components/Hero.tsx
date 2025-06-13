@@ -67,41 +67,21 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <div className="relative overflow-hidden rounded-xl shadow-2xl border border-white/10">
+              <div className="relative z-10 rounded-2xl overflow-hidden">
                 <video
-                  src="/images/svart1.mp4"
+                  src="/images/svart2.mp4"
                   autoPlay
                   loop
                   muted
                   playsInline
                   preload="metadata"
                   poster="/videos/tempo-intro-poster.jpg"
-                  className="w-full h-auto max-h-[500px] object-cover rounded-xl"
+                  className="w-full h-auto max-h-[500px] object-cover"
                   aria-hidden="true"
                 />
-                <div className="absolute inset-0 bg-black/10 rounded-xl pointer-events-none" />
 
-                {/* Social media icons aligned to the right */}
-                <div className="mt-8 flex justify-end space-x-6">
-                  <a
-                    href="https://www.instagram.com/temposportsgroup/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Instagram"
-                    className="text-gray-600 hover:text-[#00DC82] transition-colors text-2xl"
-                  >
-                    <FaInstagram />
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/company/temposportsgroup/posts/?feedView=all"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="LinkedIn"
-                    className="text-gray-600 hover:text-[#00DC82] transition-colors text-2xl"
-                  >
-                    <FaLinkedinIn />
-                  </a>
-                </div>
+                {/* Subtle overlay to enhance contrast */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
               </div>
             </motion.div>
           </div>
