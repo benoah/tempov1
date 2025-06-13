@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 
 export default function VideoSection({
   className = "",
@@ -31,49 +30,104 @@ export default function VideoSection({
       id="about-tempo"
       className={`scroll-mt-20 relative w-full bg-black text-white ${className}`}
     >
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes fadeInRight {
+          from {
+            opacity: 0;
+            transform: translateX(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-fade-in-right {
+          animation: fadeInRight 0.6s ease-out forwards;
+        }
+
+        .animate-fade-in {
+          animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .delay-200 {
+          animation-delay: 0.2s;
+        }
+
+        .delay-400 {
+          animation-delay: 0.4s;
+        }
+
+        .delay-600 {
+          animation-delay: 0.6s;
+        }
+
+        .delay-800 {
+          animation-delay: 0.8s;
+        }
+
+        .delay-300 {
+          animation-delay: 0.3s;
+        }
+
+        .delay-400 {
+          animation-delay: 0.4s;
+        }
+
+        .delay-500 {
+          animation-delay: 0.5s;
+        }
+
+        .opacity-0 {
+          opacity: 0;
+        }
+      `}</style>
+
       <div className="max-w-[1440px] mx-auto px-6 lg:px-20 py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="grid lg:grid-cols-2 gap-20"
-        >
+        <div className="opacity-0 animate-fade-in-up grid lg:grid-cols-2 gap-20">
           {/* Hidden heading for accessibility & SEO */}
           <h2 className="sr-only">Tempo Sports Group Services</h2>
 
           {/* Left Column */}
           <div>
-            <motion.h2
-              className="text-5xl md:text-6xl font-bold mb-6 leading-[1.05]"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
+            <h2 className="opacity-0 animate-fade-in-up delay-200 text-5xl md:text-6xl font-bold mb-6 leading-[1.05]">
               ELEVATING <br />
               <span className="text-[#00DC82]">ELITE ATHLETES</span> <br />
               SINCE 2014
-            </motion.h2>
+            </h2>
 
-            <motion.p
-              className="text-lg text-gray-300 mb-10 font-light leading-relaxed"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
+            <p className="opacity-0 animate-fade-in delay-400 text-lg text-gray-300 mb-10 font-light leading-relaxed">
               From seasoned pros to rising talents, we guide every athlete with
-              strategy, care, and precision. Whether you're chasing your next
-              contract or just starting your journey — we're in your corner.
-            </motion.p>
+              strategy, care, and precision. Whether you&#39;re chasing your
+              next contract or just starting your journey — we&#39;re in your
+              corner.
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              viewport={{ once: true }}
-            >
+            <div className="opacity-0 animate-fade-in delay-600">
               <a
                 href="#contact"
                 title="Contact Tempo Sports Group to become a client"
@@ -82,39 +136,31 @@ export default function VideoSection({
               >
                 Join Tempo Sports Group
               </a>
-            </motion.div>
+            </div>
           </div>
 
           {/* Right Column – Services */}
           <div className="space-y-6">
             {services.map((service, index) => (
-              <motion.div
+              <div
                 key={service.title}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white/5 border border-white/10 rounded-xl p-6 hover:shadow-xl transition-shadow"
+                className={`opacity-0 animate-fade-in-right bg-white/5 border border-white/10 rounded-xl p-6 hover:shadow-xl transition-shadow delay-${
+                  300 + index * 100
+                }`}
               >
-                <motion.h3 className="text-2xl font-semibold tracking-tight mb-3">
+                <h3 className="text-2xl font-semibold tracking-tight mb-3">
                   {service.title}
-                </motion.h3>
-                <motion.p className="text-gray-300 text-[17px] leading-relaxed font-light tracking-wide">
+                </h3>
+                <p className="text-gray-300 text-[17px] leading-relaxed font-light tracking-wide">
                   {service.description}
-                </motion.p>
-              </motion.div>
+                </p>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Bottom Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          viewport={{ once: true }}
-          className="mt-24 grid grid-cols-3 gap-8 border-t border-white/20 pt-12 text-center"
-        >
+        <div className="opacity-0 animate-fade-in-up delay-800 mt-24 grid grid-cols-3 gap-8 border-t border-white/20 pt-12 text-center">
           <div>
             <div className="text-3xl font-light">2014</div>
             <div className="text-gray-500 text-sm mt-1">Established</div>
@@ -127,7 +173,7 @@ export default function VideoSection({
             <div className="text-3xl font-light">#1</div>
             <div className="text-gray-500 text-sm mt-1">In Norway</div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
