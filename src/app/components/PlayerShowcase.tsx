@@ -6,7 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 
 // Types
-interface Player {
+interface Employee {
   id: string;
   name: string;
   position: string;
@@ -16,8 +16,8 @@ interface Player {
   jerseyNumber?: string;
 }
 
-interface PlayerCardProps {
-  player: Player;
+interface EmployeeCardProps {
+  player: Employee;
   priority?: boolean;
 }
 
@@ -30,8 +30,8 @@ const DESIGN = {
   body: "clamp(1rem, 1.5vw, 1.125rem)",
 };
 
-// Players Data
-const PLAYERS_DATA: Player[] = [
+// Team Data
+const EMPLOYEES_DATA: Employee[] = [
   {
     id: "mikail-adampour",
     name: "Mikail Adampour",
@@ -51,7 +51,7 @@ const PLAYERS_DATA: Player[] = [
     imageUrl: "/Mathias.jpeg",
   },
   {
-    id: "efe-özulu",
+    id: "efe-ozulu",
     name: "Efe Özulu",
     position: "Social Media Manager & Scout",
     club: "Chelsea FC",
@@ -62,7 +62,7 @@ const PLAYERS_DATA: Player[] = [
   {
     id: "william-israelsen",
     name: "William Israelsen",
-    position: " UEFA A Licence Coach and Scout",
+    position: "UEFA A Licence Coach and Scout",
     club: "Chelsea FC",
     nationality: "Norge",
     jerseyNumber: "14",
@@ -90,7 +90,7 @@ const animation = {
 };
 
 // Image Component
-function PlayerImage({
+function EmployeeImage({
   src,
   alt,
   priority,
@@ -129,7 +129,7 @@ function PlayerImage({
 }
 
 // Card Component
-function PlayerCard({ player, priority }: PlayerCardProps) {
+function EmployeeCard({ player, priority }: EmployeeCardProps) {
   const [hovered, setHovered] = useState(false);
   const reduceMotion = useReducedMotion();
 
@@ -141,11 +141,10 @@ function PlayerCard({ player, priority }: PlayerCardProps) {
       onMouseLeave={() => setHovered(false)}
     >
       <Link
-        href={`/players/${player.id}`}
+        href={`/team/${player.id}`}
         className="block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#00DC82] rounded-lg"
-        aria-label={`View profile of ${player.name}`}
+        aria-label={`Se profil for ${player.name}`}
       >
-        {/* Image */}
         <div className="relative aspect-[3/4] overflow-hidden bg-gray-100">
           <div
             className={`
@@ -154,14 +153,13 @@ function PlayerCard({ player, priority }: PlayerCardProps) {
               ${hovered && !reduceMotion ? "scale-105" : "scale-100"}
             `}
           >
-            <PlayerImage
+            <EmployeeImage
               src={player.imageUrl}
               alt={`${player.name} – ${player.position}`}
               priority={priority}
             />
           </div>
 
-          {/* Overlay */}
           <div
             className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 flex items-end transition-opacity duration-300 ${
               hovered ? "opacity-100" : "opacity-0"
@@ -178,7 +176,6 @@ function PlayerCard({ player, priority }: PlayerCardProps) {
           </div>
         </div>
 
-        {/* Content */}
         <div className="p-6">
           <h3
             className={`text-xl font-bold ${
@@ -197,21 +194,20 @@ function PlayerCard({ player, priority }: PlayerCardProps) {
 }
 
 // Main Component
-export default function PlayerShowcase() {
+export default function EmployeeShowcase() {
   const reduceMotion = useReducedMotion();
   const [showMore, setShowMore] = useState(false);
 
-  const firstRow = PLAYERS_DATA.slice(0, 3);
-  const secondRow = PLAYERS_DATA.slice(3);
+  const firstRow = EMPLOYEES_DATA.slice(0, 3);
+  const secondRow = EMPLOYEES_DATA.slice(3);
 
   return (
     <section
       id="our-team"
       className="bg-gray-50 py-24 md:py-32"
-      aria-labelledby="players-heading"
+      aria-labelledby="team-heading"
     >
       <div className="max-w-[90rem] mx-auto px-6 lg:px-20">
-        {/* Header */}
         <motion.header
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -220,21 +216,21 @@ export default function PlayerShowcase() {
           className="mb-16"
         >
           <h2
-            id="players-heading"
+            id="team-heading"
             className="font-bold text-black"
             style={{ fontSize: DESIGN.h2 }}
           >
-            VÅRE ANSATTE
+            MØT TEAMET VÅRT
           </h2>
           <p
             className="mt-4 text-gray-600 max-w-2xl"
             style={{ fontSize: DESIGN.body }}
           >
-            Vi representerer 47 profesjonelle spillere i Europas toppligaer.
+            Vi er et erfarent team som hjelper profesjonelle fotballspillere å
+            bygge karriere — på og utenfor banen.
           </p>
         </motion.header>
 
-        {/* Første rad */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={!reduceMotion ? animation.container : undefined}
@@ -243,11 +239,14 @@ export default function PlayerShowcase() {
           viewport={{ once: true, margin: "-100px" }}
         >
           {firstRow.map((player, index) => (
-            <PlayerCard key={player.id} player={player} priority={index < 3} />
+            <EmployeeCard
+              key={player.id}
+              player={player}
+              priority={index < 3}
+            />
           ))}
         </motion.div>
 
-        {/* Andre rad med animasjon */}
         <AnimatePresence>
           {showMore && (
             <motion.div
@@ -258,13 +257,12 @@ export default function PlayerShowcase() {
               transition={{ duration: 0.5, ease: "easeInOut" }}
             >
               {secondRow.map((player) => (
-                <PlayerCard key={player.id} player={player} />
+                <EmployeeCard key={player.id} player={player} />
               ))}
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* CTA-knapp */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -276,7 +274,7 @@ export default function PlayerShowcase() {
             onClick={() => setShowMore(!showMore)}
             className="inline-flex items-center gap-2 text-[#00DC82] font-semibold hover:text-[#00B86F] transition-colors"
           >
-            <span>{showMore ? "Vis færre" : "Se alle 47 spillere"}</span>
+            <span>{showMore ? "Vis færre" : "Se hele teamet"}</span>
             <svg
               className="w-5 h-5"
               fill="none"
