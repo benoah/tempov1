@@ -11,12 +11,12 @@ export default function VideoSection({
     {
       title: "Clubs & Contracts",
       description:
-        "Daily contact with clubs nationally and internationally. Our track record of maximizing deals is unmatched in Norway.",
+        "We maintain regular contact with clubs both nationally and internationally, and assist our clients in finding the right opportunities.",
     },
     {
       title: "Health Department",
       description:
-        "The only agency in Scandinavia with its own health department. Annual checkups and injury prevention.",
+        "We collaborate with trusted health institutions to offer regular checkups and support injury prevention for our clients.",
     },
     {
       title: "Sponsorships & Media",
@@ -134,7 +134,7 @@ export default function VideoSection({
                 className="inline-block px-8 py-4 bg-white text-black font-medium rounded-full hover:bg-gray-100 transition-colors duration-300"
                 aria-label="Join Tempo Sports Group as a client"
               >
-                Join Tempo Sports Group
+                Contact Us
               </a>
             </div>
           </div>
@@ -161,17 +161,9 @@ export default function VideoSection({
 
         {/* Bottom Stats */}
         <div className="opacity-0 animate-fade-in-up delay-800 mt-24 grid grid-cols-3 gap-8 border-t border-white/20 pt-12 text-center">
-          <div>
+          <div className="col-span-3 flex flex-col items-center justify-center">
             <div className="text-3xl font-light">2014</div>
             <div className="text-gray-500 text-sm mt-1">Established</div>
-          </div>
-          <div>
-            <div className="text-3xl font-light">47+</div>
-            <div className="text-gray-500 text-sm mt-1">Elite Athletes</div>
-          </div>
-          <div>
-            <div className="text-3xl font-light">#1</div>
-            <div className="text-gray-500 text-sm mt-1">In Norway</div>
           </div>
         </div>
       </div>

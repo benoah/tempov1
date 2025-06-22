@@ -37,35 +37,27 @@ const EMPLOYEES_DATA: Employee[] = [
     name: "Mikail Adampour",
     position: "CEO",
     club: "Licensed Agent by the English and Norwegian FA",
-    nationality: "Norge",
-    jerseyNumber: "8",
     imageUrl: "/Mikail.jpg",
+  },
+  {
+    id: "william-israelsen",
+    name: "William Israelsen",
+    position: "Head of Football",
+    club: "",
+    imageUrl: "/william.jpg",
   },
   {
     id: "mathias-martens",
     name: "Mathias Martens",
     position: "Agent",
-    club: "Manchester City",
-    nationality: "Norge",
-    jerseyNumber: "9",
+    club: "",
     imageUrl: "/Mathias.jpeg",
   },
   {
     id: "efe-ozulu",
     name: "Efe Özulu",
     position: "Social Media Manager & Scout",
-    club: "Chelsea FC",
-    nationality: "Norge",
-    jerseyNumber: "14",
-    imageUrl: "/efe.jpg",
-  },
-  {
-    id: "william-israelsen",
-    name: "William Israelsen",
-    position: "UEFA A Licence Coach and Scout",
-    club: "Chelsea FC",
-    nationality: "Norge",
-    jerseyNumber: "14",
+    club: "",
     imageUrl: "/efe.jpg",
   },
 ];
@@ -220,17 +212,16 @@ export default function EmployeeShowcase() {
             className="font-bold text-black"
             style={{ fontSize: DESIGN.h2 }}
           >
-            MØT TEAMET VÅRT
+            MEET OUR TEAM
           </h2>
           <p
             className="mt-4 text-gray-600 max-w-2xl"
             style={{ fontSize: DESIGN.body }}
           >
-            Vi er et erfarent team som hjelper profesjonelle fotballspillere å
-            bygge karriere — på og utenfor banen.
+            We are an experienced team dedicated to helping professional
+            footballers build their careers — on and off the pitch.
           </p>
         </motion.header>
-
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={!reduceMotion ? animation.container : undefined}

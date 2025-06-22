@@ -20,33 +20,30 @@ export default function ContactSection() {
           <div className="space-y-8 text-lg">
             <div>
               <a
-                href="mailto:hello@temposportsgroup.no"
+                href="mailto:william@tempogroup.no"
                 className="text-black hover:text-gray-600 transition-colors"
               >
-                hello@temposportsgroup.no
+                @tempogroup.no
               </a>
             </div>
 
             <div>
               <a
-                href="tel:+4712345678"
+                href="tel:+4740761888"
                 className="text-black hover:text-gray-600 transition-colors"
               >
-                +47 123 45 678
+                +47 407 61 888
               </a>
             </div>
 
-            <div className="text-gray-600">Storgata 1, 0155 Oslo</div>
-
-            <div className="pt-8 border-t border-gray-200">
-              <p className="text-gray-600">
-                Or send us a message and we&rsquo;ll respond within 24 hours.
-              </p>
+            <div>
               <a
-                href="mailto:hello@temposportsgroup.no?subject=Player%20Inquiry"
-                className="inline-block mt-6 px-8 py-4 bg-black text-white font-medium rounded-full hover:bg-gray-900 transition-colors"
+                href="https://maps.google.com/?q=Pilestredet+75C,+0155+Oslo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-black transition-colors"
               >
-                Start Conversation
+                Pilestredet 75C, 0155 Oslo
               </a>
             </div>
           </div>

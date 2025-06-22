@@ -14,10 +14,13 @@ export default function Home() {
     <main>
       <Hero />
       <VideoSection />
+      {/*
+       <OurTeamSection />
+      */}
       <AboutSection />
       <PlayerShowcase />
       <ServicesSection />
-      <OurTeamSection />
+
       <SocialResponsibilitySection />
       <ContactSection />
     </main>

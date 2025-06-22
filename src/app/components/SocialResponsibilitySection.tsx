@@ -1,43 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
-
-interface ScholarshipFormData {
-  name: string;
-  email: string;
-  age: string;
-  situation: string;
-}
 
 export default function SocialResponsibilitySection() {
-  const [formData, setFormData] = useState<ScholarshipFormData>({
-    name: "",
-    email: "",
-    age: "",
-    situation: "",
-  });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setIsSubmitting(false);
-    setSubmitted(true);
-  };
-
   return (
     <section id="social-responsibility" className="bg-white py-24 md:py-32">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-20">
@@ -58,6 +23,7 @@ export default function SocialResponsibilitySection() {
             is how we help.
           </p>
         </motion.div>
+
         {/* Layout */}
         <div className="grid lg:grid-cols-2 gap-20">
           {/* Left content */}
@@ -66,181 +32,80 @@ export default function SocialResponsibilitySection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="space-y-12"
           >
+            {/* Stipend */}
             <div>
               <h3 className="text-3xl font-semibold text-black mb-4">
-                National Football Scholarship
+                National Football Scholarship (01.01.2024)
               </h3>
-              <p className="text-[#25723e] font-medium mb-4">
-                Because no one should miss out on football because of money.
-              </p>
-
-              <p className="text-gray-600 leading-relaxed mb-6">
-                Football used to be one of the most accessible sports in the
-                world. Today, for many families, even a pair of boots or club
-                fees are out of reach. We believe every kid deserves a fair shot
-                — no matter where they come from.
-              </p>
-
-              <blockquote className="border-l-4 border-[#00DC82] pl-6 my-8">
-                <p className="text-xl text-black font-medium italic">
-                  “This scholarship gave me the chance to keep chasing my
-                  dream.”
-                </p>
-                <footer className="mt-2 text-sm text-gray-500">
-                  — Scholarship Recipient, Age 16
-                </footer>
-              </blockquote>
-
               <p className="text-gray-600 leading-relaxed">
-                That’s why we created the national football scholarship — to
-                make sure finances never block passion, talent, or friendship on
-                the pitch.
+                Since we started Tempo Sports Group, our motto has always been
+                to put the player first. In a world full of injustice, we
+                believe everyone should have the chance to play football — no
+                matter their financial situation.
+              </p>
+              <p className="text-gray-600 leading-relaxed mt-4">
+                Football was once one of the world’s most accessible sports.
+                Now, increasing numbers of young people are being left out due
+                to costs like equipment, club fees, or training programs.
+              </p>
+              <p className="text-gray-600 leading-relaxed mt-4">
+                Our national football scholarship aims to help remove those
+                barriers. We can’t help everyone — but we’ll do what we can.
+              </p>
+              <p className="text-gray-600 leading-relaxed mt-4">
+                If expensive gear, fees, or other costs are holding you back
+                from playing, reach out to us at{" "}
+                <a
+                  href="mailto:stipend@tempogroup.no"
+                  className="text-[#25723e] underline"
+                >
+                  stipend@tempogroup.no
+                </a>{" "}
+                and tell us about your situation. We promise a quick response.
               </p>
             </div>
 
-            <div className="border-t border-gray-200 pt-12 mt-12">
-              <h3 className="text-2xl font-semibold text-black mb-4">
-                Annual Community Donation
+            {/* Donasjon */}
+            <div className="border-t border-gray-200 pt-12">
+              <h3 className="text-3xl font-semibold text-black mb-4">
+                Annual Community Donation (01.01.2024)
               </h3>
-              <p className="text-gray-600 mb-2">
-                In 2023, we donated NOK 25,000 to the Palestine Committee — our
-                first of many annual contributions to causes we believe in.
+              <p className="text-gray-600 leading-relaxed">
+                In the face of this autumn’s tragedies, we chose to support
+                Palestinakomiteen in Norway with a NOK 25,000 donation — our
+                first community donation.
               </p>
-              <span className="text-sm text-gray-500">2023 Recipient</span>
+              <p className="text-gray-600 leading-relaxed mt-4">
+                For decades, Palestinakomiteen has worked for solidarity and
+                justice. They play a key role in raising awareness about the
+                effects of occupation and apartheid on daily life and future
+                hopes for Palestinians.
+              </p>
+              <p className="text-gray-600 leading-relaxed mt-4 italic">
+                “We do not receive government funding, so this donation helps us
+                continue working independently and in solidarity with the
+                Palestinian people,” said Lene Khateeb, leader of
+                Palestinakomiteen.
+              </p>
+              <p className="text-sm text-gray-500 mt-4">2023 Recipient</p>
             </div>
           </motion.div>
 
-          {/* Right: Form */}
+          {/* Right content: Optional quote or placeholder */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
+            className="bg-gray-50 rounded-xl p-4 shadow-inner flex items-center justify-center"
           >
-            {submitted ? (
-              <div className="text-center py-20">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="w-16 h-16 bg-[#00DC82] rounded-full flex items-center justify-center mx-auto mb-6"
-                >
-                  <svg
-                    className="w-8 h-8 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </motion.div>
-                <h3 className="text-2xl font-semibold text-[#00DC82] mb-2">
-                  Application Sent ✅
-                </h3>
-                <p className="text-gray-600">
-                  Thank you! We promise you a quick response.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <h4 className="text-xl font-semibold text-black mb-4">
-                  Apply for Scholarship
-                </h4>
-                <p className="text-sm text-gray-500 mb-6">
-                  We review all submissions personally.
-                </p>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-900 mb-2">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    autoComplete="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md text-black focus:outline-none focus:border-[#00DC82] transition"
-                    placeholder="Your name"
-                  />
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-2">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      autoComplete="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md text-black focus:outline-none focus:border-[#00DC82] transition"
-                      placeholder="you@example.com"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-2">
-                      Age
-                    </label>
-                    <input
-                      type="number"
-                      name="age"
-                      value={formData.age}
-                      onChange={handleChange}
-                      required
-                      min="8"
-                      max="25"
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md text-black focus:outline-none focus:border-[#00DC82] transition"
-                      placeholder="Your age"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-900 mb-2">
-                    Your situation
-                  </label>
-                  <textarea
-                    name="situation"
-                    value={formData.situation}
-                    onChange={handleChange}
-                    required
-                    rows={4}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-md text-black focus:outline-none focus:border-[#00DC82] transition resize-none"
-                    placeholder="Tell us how we can help..."
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-[#00DC82] text-white font-semibold py-4 rounded-full hover:bg-[#00c26e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? "Sending..." : "Submit Application"}
-                </button>
-
-                <p className="text-center text-sm text-gray-500">
-                  Or email{" "}
-                  <a
-                    href="mailto:stipend@tempogroup.no"
-                    className="text-[#25723e] underline"
-                  >
-                    stipend@tempogroup.no
-                  </a>
-                </p>
-              </form>
-            )}
+            <img
+              src="https://images.squarespace-cdn.com/content/v1/5e956eee226232107a0bc361/d0092ff1-8308-4825-ac20-d5e45b52ae23/PR_NOR_010124+%283%29.png?format=2500w"
+              alt="Tempo Sports Group Donation"
+              className="rounded-lg max-h-[500px] w-full object-contain"
+            />
           </motion.div>
         </div>
       </div>

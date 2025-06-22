@@ -1,6 +1,7 @@
-// src/components/Footer.tsx
+"use client";
 
 import Link from "next/link";
+import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -13,47 +14,53 @@ export default function Footer() {
           <div>
             <h3 className="text-2xl font-bold mb-4">TEMPO</h3>
             <p className="text-gray-400 font-light">
-              Bygger karrierer, ikke bare kontrakter.
+              Building careers, not just contracts.
             </p>
           </div>
 
-          {/* Right side - Links in rows */}
+          {/* Right side - Navigation and Contact */}
           <div className="lg:text-right space-y-6">
-            {/* Navigation Links */}
-            <nav className="space-x-6">
-              <Link
-                href="/"
+            {/* Navigation */}
+            <nav className="flex flex-wrap justify-start lg:justify-end gap-6 text-sm font-medium">
+              <a
+                href="#football"
                 className="text-gray-400 hover:text-white transition-colors"
               >
-                Hjem
-              </Link>
-              <Link
-                href="/about"
+                FOOTBALL
+              </a>
+              <a
+                href="#about"
                 className="text-gray-400 hover:text-white transition-colors"
               >
-                Om oss
-              </Link>
-              <Link
-                href="/players"
+                ABOUT
+              </a>
+              <a
+                href="#our-team"
                 className="text-gray-400 hover:text-white transition-colors"
               >
-                Spillere
-              </Link>
-              <Link
-                href="/contact"
+                OUR TEAM
+              </a>
+              <a
+                href="#social-responsibility"
                 className="text-gray-400 hover:text-white transition-colors"
               >
-                Kontakt
-              </Link>
+                SOCIAL RESPONSIBILITY
+              </a>
+              <a
+                href="#contact"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                CONTACT
+              </a>
             </nav>
 
             {/* Contact Info */}
-            <div className="space-x-6 text-gray-400">
+            <div className="space-x-4 text-gray-400 text-sm">
               <a
-                href="tel:+4712345678"
+                href="tel:+4740761888"
                 className="hover:text-white transition-colors"
               >
-                +47 123 45 678
+                +47 407 61 888
               </a>
               <span className="text-gray-600">·</span>
               <a
@@ -64,34 +71,34 @@ export default function Footer() {
               </a>
             </div>
 
-            {/* Social Links - Text only */}
-            <div className="space-x-6">
+            {/* Social Icons */}
+            <div className="flex justify-start lg:justify-end space-x-6 pt-2">
               <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
+                href="https://www.instagram.com/yourprofile"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="text-gray-400 hover:text-white transition-colors text-xl"
               >
-                Instagram
+                <FaInstagram />
               </a>
               <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
+                href="https://www.instagram.com/temposportsgroup/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="text-gray-400 hover:text-white transition-colors text-xl"
               >
-                LinkedIn
-              </a>
-              <a
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                Twitter
+                <FaLinkedinIn />
               </a>
             </div>
           </div>
         </div>
 
-        {/* Bottom bar */}
+        {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-gray-800">
           <p className="text-sm text-gray-500">
-            © {currentYear} Tempo Sports Group AS. Alle rettigheter forbeholdt.
+            © {currentYear} Tempo Sports Group AS. All rights reserved.
           </p>
         </div>
       </div>
