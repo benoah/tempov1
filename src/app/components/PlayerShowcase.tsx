@@ -49,7 +49,7 @@ const EMPLOYEES_DATA: Employee[] = [
   {
     id: "mathias-martens",
     name: "Mathias Martens",
-    position: "Agent",
+    position: "Head of scouting",
     club: "",
     imageUrl: "/Mathias.jpeg",
   },
