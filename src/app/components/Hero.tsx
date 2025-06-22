@@ -71,7 +71,7 @@ export default function Hero() {
           >
             <div className="relative z-10 rounded-2xl overflow-hidden">
               <video
-                src="/images/farge.mp4"
+                src="/videos/farge.mp4" // ← Fixed: videos folder, not images
                 autoPlay
                 loop
                 muted

@@ -60,6 +60,13 @@ const EMPLOYEES_DATA: Employee[] = [
     club: "",
     imageUrl: "/efe.jpg",
   },
+  {
+    id: "mirza-sahman",
+    name: "Mirza Sahman",
+    position: "Agent & Scout",
+    club: "",
+    imageUrl: "",
+  },
 ];
 
 // Animations

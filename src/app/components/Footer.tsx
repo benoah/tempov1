@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import { FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 export default function Footer() {
@@ -11,7 +11,13 @@ export default function Footer() {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Left side - Brand */}
           <div>
-            <h3 className="text-2xl font-bold mb-4">TEMPO</h3>
+            <Image
+              src="/tempologo1white.png"
+              alt="Tempo Logo - Black"
+              width={120}
+              height={60}
+            />
+
             <p className="text-gray-400 font-light">
               Building careers, not just contracts.
             </p>
@@ -63,7 +69,7 @@ export default function Footer() {
               </a>
               <span className="text-gray-600">·</span>
               <a
-                href="mailto:hello@temposportsgroup.no"
+                href="mailto:william@tempogroup.no"
                 className="hover:text-white transition-colors"
               >
                 hello@temposportsgroup.no
